@@ -16,19 +16,21 @@ import type {
   PowerState,
 } from './internal/types';
 
-// android 因为隐私协议整改的原因 禁用掉了原生端uniqueId常量的获取 所以Android端调用该方法只会获得 'unknown'结果
-// 想获取UniqueId请调用syncUniqueId方法
 export const getUniqueId = () =>
   getSupportedPlatformInfoSync({
     defaultValue: 'unknown',
     memoKey: 'uniqueId',
-    supportedPlatforms: ['ios', 'windows'],
+    supportedPlatforms: ['android', 'ios', 'windows'],
     getter: () => RNDeviceInfo.uniqueId,
   });
 
 let uniqueId: string;
 export async function syncUniqueId() {
+  if (Platform.OS === 'ios') {
     uniqueId = await RNDeviceInfo.syncUniqueId();
+  } else {
+    uniqueId = getUniqueId();
+  }
   return uniqueId;
 }
 
