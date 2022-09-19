@@ -189,6 +189,7 @@ public class RNDeviceModule extends ReactContextBaseJavaModule {
 
     final Map<String, Object> constants = new HashMap<>();
 
+    constants.put("uniqueId", "");
     constants.put("deviceId", Build.BOARD);
     constants.put("bundleId", getReactApplicationContext().getPackageName());
     constants.put("systemName", "Android");
